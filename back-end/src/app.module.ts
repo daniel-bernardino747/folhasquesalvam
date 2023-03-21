@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 
-import { PrepCommand } from './prep.command';
+import { AppController } from './controllers/app.controller';
 
 @Module({
-  providers: [PrepCommand],
+  controllers: [AppController],
 })
 export class AppModule {}
