@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className={roboto.className}>
-        <body>
+        <body className="flex justify-center border-0 bg-[#305230]">
           <NavBar />
           {children}
         </body>
