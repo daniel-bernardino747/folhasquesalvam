@@ -1,6 +1,5 @@
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs/app-beta";
-import { NavBar } from "@/components";
 import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
@@ -9,8 +8,26 @@ const roboto = Roboto({
 });
 
 export const metadata = {
-  title: "Folhas Que Salvam",
-  description: "Mudando o mundo com uma atitude de cada vez",
+  title: {
+    default: "Folhas",
+    template: "%s | Folhas Que Salvam",
+  },
+  description: "Te ensinamos a fazer muito pelo mundo com pouco do seu dia.",
+  openGraph: {
+    title: "Folhas que Salvam",
+    description: "Te ensinamos a fazer muito pelo mundo com pouco do seu dia.",
+    url: "https://folhasquesalvam.vercel.app/",
+    siteName: "Folhas Que Salvam",
+    locale: "pt-BR",
+    type: "website",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      new URL("/favicon.ico", "https://folhasquesalvam.vercel.app"),
+    ],
+    shortcut: ["/favicon.ico"],
+  },
 };
 
 export default function RootLayout({
