@@ -1,11 +1,11 @@
 {
-  "name": "@prepcoding/cli",
+  "name": "folhasquesalvam",
   "version": "0.0.1",
   "description": "",
   "author": "Daniel Bernardino <dn.danielbernardino@gmail.com>",
   "keywords": [
-    "cli",
-    "prepcoding",
+    "ONG",
+    "environmental",
     "nodejs"
   ],
   "private": true,
@@ -29,12 +29,8 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "^1.2.2",
-    "@nestjs/mongoose": "^9.2.2",
-    "@nestjs/platform-express": "^9.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
-    "mongoose": "^7.0.2",
-    "nest-commander": "^3.6.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
@@ -76,8 +72,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  },
-  "bin": {
-    "prep": "node dist/main"
   }
 }
