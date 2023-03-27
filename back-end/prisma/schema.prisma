@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  idClerk   Int      @unique
+  email     String   @unique @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Member    Member[]
+
+  @@map("users")
+}
+
+model Member {
+  id         Int          @id @default(autoincrement())
+  User       User         @relation(fields: [userId], references: [id])
+  Team       Team         @relation(fields: [teamId], references: [id])
+  teamId     Int          @map("team_id")
+  userId     Int          @map("user_id")
+  role       Role         @default(USER)
+  createdAt  DateTime     @default(now()) @map("created_at")
+  updatedAt  DateTime     @updatedAt @map("updated_at")
+  MemberGoal MemberGoal[]
+
+  @@map("members")
+}
+
+model Goal {
+  id          Int          @id @default(autoincrement())
+  title       String       @db.VarChar(255)
+  description String       @db.Text
+  completed   Boolean      @default(false)
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  MemberGoal  MemberGoal[]
+
+  @@map("goals")
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Member    Member[]
+
+  @@map("teams")
+}
+
+model MemberGoal {
+  id        Int      @id @default(autoincrement())
+  Goal      Goal     @relation(fields: [goalId], references: [id])
+  Member    Member   @relation(fields: [memberId], references: [id])
+  goalId    Int      @map("goal_id")
+  memberId  Int      @map("member_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("members_goals")
+}
+
+enum Role {
+  DIRECTOR
+  LEADER
+  TEAM
+  ALUMNI
+  AMBASSADOR
+  USER
+}
