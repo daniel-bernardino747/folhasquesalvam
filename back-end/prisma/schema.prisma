@@ -31,6 +31,7 @@ model Member {
   createdAt  DateTime     @default(now()) @map("created_at")
   updatedAt  DateTime     @updatedAt @map("updated_at")
   MemberGoal MemberGoal[]
+  Points     Points[]
 
   @@map("members")
 }
@@ -67,6 +68,17 @@ model MemberGoal {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("members_goals")
+}
+
+model Points {
+  id        Int      @id @default(autoincrement())
+  Member    Member   @relation(fields: [memberId], references: [id])
+  memberId  Int      @map("member_id")
+  amount    Int
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("points")
 }
 
 enum Role {
