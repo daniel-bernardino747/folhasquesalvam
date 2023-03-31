@@ -35,3 +35,7 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 .env
+
+# RBAC future implementation
+/src/roles.guard.ts 
+/src/roles.decorator.ts
