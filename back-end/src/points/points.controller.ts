@@ -1,34 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { Role, User } from '@prisma/client';
+import { Controller, Get, Req } from '@nestjs/common';
+import { Roles } from 'src/roles.decorator';
 import { PointsService } from './points.service';
-import { CreatePointDto } from './dto/create-point.dto';
-import { UpdatePointDto } from './dto/update-point.dto';
 
-@Controller('points')
+type RequestAuth = Request & { user: User };
+
+@Controller('api/points')
+@ApiTags('points')
 export class PointsController {
   constructor(private readonly pointsService: PointsService) {}
 
-  @Post()
-  create(@Body() createPointDto: CreatePointDto) {
-    return this.pointsService.create(createPointDto);
-  }
+  @Get('all')
+  @Roles(Role.ALUMNI, Role.AMBASSADOR, Role.TEAM)
+  findOne(@Req() request: RequestAuth) {
+    const user = request.user;
 
-  @Get()
-  findAll() {
-    return this.pointsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.pointsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePointDto: UpdatePointDto) {
-    return this.pointsService.update(+id, updatePointDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.pointsService.remove(+id);
+    return this.pointsService.findAll(+user.id);
   }
 }

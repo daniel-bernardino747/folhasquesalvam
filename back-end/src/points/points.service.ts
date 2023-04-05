@@ -1,26 +1,64 @@
+import { PrismaService } from './../domain/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { CreatePointDto } from './dto/create-point.dto';
-import { UpdatePointDto } from './dto/update-point.dto';
+import { Goal, MemberGoal } from '@prisma/client';
+
+type GoalWithMembers = Goal & { MemberGoal: MemberGoal[] };
 
 @Injectable()
 export class PointsService {
-  create(createPointDto: CreatePointDto) {
-    return 'This action adds a new point';
+  MS_PER_DAY = 1000 * 60 * 60 * 24; // 86400000ms
+  POINTS_PER_DAY = 500;
+  GROWTH_FACTOR = 0.11;
+  constructor(private readonly prismaService: PrismaService) {}
+
+  findAll(memberId: number) {
+    return this.prismaService.points.findMany({ where: { memberId } });
   }
 
-  findAll() {
-    return `This action returns all points`;
+  public addPoints(goal: GoalWithMembers) {
+    const membersIds = goal.MemberGoal.map((member) => member.memberId);
+    const points = this.calculatePointsByDeliveryDuration(
+      goal.deliveryDate,
+      goal.createdAt,
+    );
+
+    return this.prismaService.points.updateMany({
+      where: {
+        memberId: { in: membersIds },
+      },
+      data: {
+        amount: {
+          increment: points,
+        },
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} point`;
+  private calculatePointsByDeliveryDuration(
+    dayDelivered: Date,
+    deliveryDate: Date,
+  ) {
+    if (
+      !(dayDelivered instanceof Date && !isNaN(dayDelivered.getTime())) ||
+      !(deliveryDate instanceof Date && !isNaN(deliveryDate.getTime()))
+    ) {
+      throw new Error('The provided dates are not valid.');
+    }
+
+    const timeDelta = deliveryDate.getTime() - dayDelivered.getTime();
+    const differenceInDays = Math.round(timeDelta / this.MS_PER_DAY);
+
+    if (differenceInDays < 0) {
+      throw new Error('The delivery date cannot be before the day delivered.');
+    }
+
+    return this.POINTS_PER_DAY * this.growthCurve(differenceInDays);
   }
 
-  update(id: number, updatePointDto: UpdatePointDto) {
-    return `This action updates a #${id} point`;
-  }
+  private growthCurve(x: number) {
+    if (typeof x !== 'number')
+      throw new Error('The argument must be a number.');
 
-  remove(id: number) {
-    return `This action removes a #${id} point`;
+    return 1.01 ** (this.GROWTH_FACTOR * x);
   }
 }
