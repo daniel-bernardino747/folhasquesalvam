@@ -8,7 +8,16 @@ export class MembersService {
   constructor(private readonly prismaService: PrismaService) {}
 
   create(createMemberDto: CreateMemberDto) {
-    return this.prismaService.member.create({ data: createMemberDto });
+    return this.prismaService.member.create({
+      data: {
+        ...createMemberDto,
+        Points: {
+          create: {
+            amount: 0,
+          },
+        },
+      },
+    });
   }
 
   findAll() {
