@@ -1,15 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
-
-export default function Error({ error }: { error: Error }) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
-
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error;
+  reset: () => void;
+}) {
   return (
     <div>
-      <p>Vish, alguma coisa deu errada... que tal recarregar?</p>
+      <p>Something went wrong!</p>
+      <p>{error.message}</p>
+      <button onClick={() => reset()}>Reset error boundary</button>
     </div>
   );
 }
