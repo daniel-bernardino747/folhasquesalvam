@@ -28,7 +28,7 @@ export function NavBar() {
             <Link href="/parceiros">Parceiros</Link>
           </li>
           <li className={optionClass}>
-            <Link href="/login">Login</Link>
+            <Link href="/sign-in">Login</Link>
           </li>
           <li className="ml-4 flex h-10 w-40 items-center justify-center rounded-xl bg-amber-300 transition-all duration-100 hover:scale-105">
             <p className="text-xl text-[#305230]">
