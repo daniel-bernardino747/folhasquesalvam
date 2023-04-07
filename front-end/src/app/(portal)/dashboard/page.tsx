@@ -1,14 +1,11 @@
-"use client";
-import { SignedIn, UserButton } from "@clerk/nextjs/app-beta/client";
+import { Dashboard } from "@/components/Dashboard";
 
 export default function Home() {
   return (
-    <main className="">
-      <SignedIn>
-        <UserButton afterSignOutUrl="/" />
-      </SignedIn>
-
-      <p className="">Dashboard</p>
+    <main className="flex h-screen items-center justify-center bg-gradient-to-r from-[#305230] to-[#72AA63] p-10">
+      <div className="container h-full rounded-xl bg-white shadow-xl">
+        <Dashboard />
+      </div>
     </main>
   );
 }
