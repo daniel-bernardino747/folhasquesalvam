@@ -29,10 +29,10 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
     try {
-      // const payload = await this.authService.verifySessionAndRole(session);
-      // if (payload.session.status !== 'active') throw false;
+      const payload = await this.authService.verifySessionAndRole(session);
+      if (payload.session.status !== 'active') throw false;
 
-      request['user'] = 'chegou'; // payload.user;
+      request['user'] = payload.user;
     } catch {
       throw new UnauthorizedException();
     }

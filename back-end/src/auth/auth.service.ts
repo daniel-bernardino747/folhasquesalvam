@@ -5,13 +5,29 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Session, User as UserClerk } from '@clerk/clerk-sdk-node';
+import {
+  EmailAddress,
+  ExternalAccount,
+  PhoneNumber,
+  User as UserClerk,
+  Web3WalletJSON,
+} from '@clerk/clerk-sdk-node';
 import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosError } from 'axios';
 import { Role, User } from '@prisma/client';
 
 type UserWithMember = User & { Member: { role: Role }[] };
-
+interface Session {
+  readonly id: string;
+  readonly client_id: string;
+  readonly user_id: string;
+  readonly status: string;
+  readonly lastActive_at: number;
+  readonly expire_at: number;
+  readonly abandon_at: number;
+  readonly created_at: number;
+  readonly updated_at: number;
+}
 @Injectable()
 export class AuthService {
   private readonly API_URL = 'https://api.clerk.dev/v1';
@@ -33,16 +49,17 @@ export class AuthService {
 
     let user: UserWithMember = await this.getUserInDatabase(session);
 
-    if (!user) user = await this.registerUser(id);
+    if (!user) user = await this.registerUser(session.user_id);
 
     return { session, user };
   }
 
   private async registerUser(id: string) {
-    const { data: userClerk } = await this.getUserClerk(id);
+    const { data } = await this.getUserClerk(id);
+    const userClerk: UserCleckAPI = data;
 
     return this.createUser({
-      email: userClerk.emailAddresses[0].emailAddress,
+      email: userClerk.email_addresses[0].email_address,
       id: userClerk.id,
     });
   }
@@ -77,7 +94,7 @@ export class AuthService {
   private getUserInDatabase(session: Session) {
     return this.prismaService.user.findUnique({
       where: {
-        idClerk: session.userId,
+        idClerk: session.user_id,
       },
       include: {
         Member: {
@@ -111,4 +128,12 @@ export class AuthService {
       },
     });
   }
+}
+
+interface UserCleckAPI {
+  id: string;
+  email_addresses?: {
+    id: string;
+    email_address: string;
+  }[];
 }
