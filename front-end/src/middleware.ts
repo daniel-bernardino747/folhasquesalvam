@@ -19,7 +19,22 @@ const isPublic = (path: string) => {
   );
 };
 
+const alreadyLoggedInAuthRoutes = (request: NextRequest) => {
+  const path = request.nextUrl.pathname;
+  const { userId } = getAuth(request);
+
+  if (userId) {
+    return ["/sign-in*", "/sign-up*"].find((x) =>
+      path.match(new RegExp(`^${x}$`.replace("*$", "($|/)")))
+    );
+  }
+};
+
 export default withClerkMiddleware((request: NextRequest) => {
+  if (alreadyLoggedInAuthRoutes(request)) {
+    const dashboardUrl = new URL("/dashboard", request.url);
+    return NextResponse.redirect(dashboardUrl);
+  }
   if (isPublic(request.nextUrl.pathname)) {
     return NextResponse.next();
   }
