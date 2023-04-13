@@ -5,9 +5,11 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { Public } from './auth/auth.decorator';
 
 @Controller('api')
 export class AppController {
+  @Public()
   @HttpCode(200)
   @Get('health')
   getHealth(): any {
