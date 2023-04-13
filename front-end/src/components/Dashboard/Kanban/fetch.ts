@@ -1,8 +1,9 @@
+import { api } from "@/config/api";
 import { UnauthorizatedError } from "@/errors";
 
 export async function getData(sessionId: string | undefined | null) {
   try {
-    const response = await fetch("http://localhost:4000/api/goals", {
+    const response = await fetch(`${api.baseURL}/api/goals`, {
       method: "GET",
       cache: "no-cache",
       headers: { Authorization: `Bearer ${sessionId}` },

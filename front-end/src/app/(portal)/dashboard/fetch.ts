@@ -1,10 +1,8 @@
-import { cookies } from "next/dist/client/components/headers";
-import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import { api } from "@/config/api";
 
 export async function getAllMembers(sessionId: string | undefined | null) {
-  console.log("my session =>", { sessionId });
   try {
-    const response = await fetch("http://localhost:4000/api/members", {
+    const response = await fetch(`${api.baseURL}/api/members`, {
       method: "GET",
       cache: "no-cache",
       headers: { Authorization: `Bearer ${sessionId}` },

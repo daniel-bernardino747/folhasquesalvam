@@ -4,8 +4,8 @@ const MEMBERS_TO_RENDER_LIMIT = 5;
 const PROFILE_IMAGE_SPACING = 25;
 
 export function ViewMembers({ data }: { data: any }) {
-  const firstFiveMembers = data.slice(0, MEMBERS_TO_RENDER_LIMIT);
-  const hasMoreThanFiveMembers = data.length > MEMBERS_TO_RENDER_LIMIT;
+  const firstFiveMembers = data?.slice(0, MEMBERS_TO_RENDER_LIMIT);
+  const hasMoreThanFiveMembers = data?.length > MEMBERS_TO_RENDER_LIMIT;
   const moreMembersIconDistance =
     MEMBERS_TO_RENDER_LIMIT * PROFILE_IMAGE_SPACING;
 
