@@ -40,7 +40,7 @@ model Goal {
   id           Int          @id @default(autoincrement())
   title        String       @db.VarChar(255)
   description  String       @db.Text
-  completed    Boolean      @default(false)
+  status       Status       @default(DO)
   deliveryDate DateTime
   createdAt    DateTime     @default(now()) @map("created_at")
   updatedAt    DateTime     @updatedAt @map("updated_at")
@@ -89,4 +89,11 @@ enum Role {
   ALUMNI
   AMBASSADOR
   USER
+}
+
+enum Status {
+  DO
+  PROGRESS
+  REVIEW
+  DONE
 }
