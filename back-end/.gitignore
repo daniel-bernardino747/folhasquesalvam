@@ -37,5 +37,3 @@ lerna-debug.log*
 .env
 
 # RBAC future implementation
-/src/roles.guard.ts 
-/src/roles.decorator.ts
