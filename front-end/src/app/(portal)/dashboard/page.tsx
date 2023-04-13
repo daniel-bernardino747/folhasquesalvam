@@ -1,11 +1,23 @@
-import { Dashboard } from "@/components/Dashboard";
+"use client";
+import { Suspense, use } from "react";
+import Loading from "@/app/loading";
 
-export default function Home() {
+import { Kanban, ViewMembers } from "@/components";
+import { useAuth } from "@clerk/nextjs";
+import { APIMembers, getAllMembers } from "./fetch";
+
+export default function Dashboard() {
+  const authProps = useAuth();
+  const { sessionId } = authProps;
+  const { data, error }: APIMembers = use(getAllMembers(sessionId));
+
   return (
-    <main className="flex h-screen items-center justify-center bg-gradient-to-r from-[#305230] to-[#72AA63] p-10">
-      <div className="container h-full rounded-xl bg-white shadow-xl">
-        <Dashboard />
+    <div className="h-screen">
+      <div className="flex justify-between font-normal">
+        <h1 className="text-4xl">Dashboard</h1>
+        <ViewMembers data={data} />
       </div>
-    </main>
+      <Kanban {...authProps} />
+    </div>
   );
 }
