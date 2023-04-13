@@ -53,7 +53,7 @@ export class GoalsService {
   async complete(id: number) {
     const goalCompleted = await this.prismaService.goal.update({
       data: {
-        completed: true,
+        status: 'DONE',
       },
       where: {
         id,

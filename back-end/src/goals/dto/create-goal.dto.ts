@@ -19,6 +19,6 @@ export class CreateGoalDto {
   deliveryDate: Date;
 
   @IsOptional()
-  @ApiProperty({ default: 'false' })
-  completed = false;
+  @ApiProperty({ default: 'DO' })
+  status: 'DO' | 'DONE' | 'PROGRESS' | 'REVIEW' = 'DO';
 }
