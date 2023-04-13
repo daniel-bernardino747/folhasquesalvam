@@ -59,7 +59,7 @@ export function Kanban({ sessionId }: KanbanProps) {
   };
 
   return (
-    <div className="grid grid-rows-3 gap-4 pt-6 lg:grid-cols-3">
+    <div className="grid gap-4 pt-6 lg:grid-cols-3">
       {Object.entries(tasks).map(([statusString, { list, title, color }]) => {
         const status = statusString as "DO" | "DONE" | "PROGRESS";
         return (
