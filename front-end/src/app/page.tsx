@@ -1,3 +1,4 @@
+"use client";
 import { NavBar } from "@/components";
 
 export default async function Home() {
@@ -21,7 +22,7 @@ export default async function Home() {
               <button className="h-14 w-48 rounded-lg border-2 border-white text-white">
                 Explorar
               </button>
-              <button className="border- h-14 w-48 rounded-lg bg-amber-300 font-[500] text-[#305230]">
+              <button className="h-14 w-48 rounded-lg bg-amber-300 font-[500] text-[#305230]">
                 Faça parte
               </button>
             </div>
