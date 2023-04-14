@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Select, setOptions, localePtBR } from "@mobiscroll/react";
+import { Select, setOptions, localePtBR, Datepicker } from "@mobiscroll/react";
 
 interface FormCreateCardProps {
   useToggle: [boolean, (nextValue?: any) => void];
@@ -64,25 +64,73 @@ const myData = [
 
 export function FormCreateCard({ useToggle, color }: FormCreateCardProps) {
   const { register, handleSubmit, formState, reset } = useForm<FormData>();
-  const [errorSelected, setErrorSelected] = useState(false);
+  const [errorSelected, setErrorSelected] = useState({
+    date: { value: false, message: "" },
+    members: { value: false, message: "" },
+  });
   const [peopleSelected, setPeopleSelected] = useState([]);
+  const [startDate, setStartDate] = useState("");
   const [isVisible, toggle] = useToggle;
 
   const onSubmit = (data: FormData) => {
-    if (!peopleSelected.length) {
-      setErrorSelected(true);
+    const invalidMembers = !peopleSelected.length;
+    const invalidDate = !startDate;
+
+    let newDateError = { value: false, message: "" };
+    let newMembersError = { value: false, message: "" };
+
+    if (invalidMembers || invalidDate) {
+      if (invalidMembers) {
+        newMembersError = {
+          message: "Selecione alguém para a tarefa.",
+          value: true,
+        };
+      }
+      if (invalidDate) {
+        newDateError = { message: "Selecione a data de entrega.", value: true };
+      }
+      setErrorSelected({
+        date: newDateError,
+        members: newMembersError,
+      });
+      return;
+    }
+
+    const currentDate = new Date();
+    const minDate = new Date();
+    minDate.setDate(currentDate.getDate() + 3);
+    const selectedDate = new Date(startDate);
+    console.log({ minDate, selectedDate });
+    console.log(selectedDate < minDate);
+    if (selectedDate < minDate) {
+      setErrorSelected((prev) => ({
+        ...prev,
+        date: {
+          message:
+            "A data de entrega precisa ser no mínimo 3 dias após a data atual.",
+          value: true,
+        },
+      }));
       return;
     }
 
     setPeopleSelected([]);
-    setErrorSelected(false);
+    setErrorSelected({
+      members: { message: "", value: false },
+      date: { message: "", value: false },
+    });
+    setStartDate("");
     reset();
   };
   const onChangeSelected = (e: any) => setPeopleSelected(e.value);
 
   const cancelCreate = () => {
     setPeopleSelected([]);
-    setErrorSelected(false);
+    setErrorSelected({
+      members: { message: "", value: false },
+      date: { message: "", value: false },
+    });
+    setStartDate("");
     toggle(!isVisible);
     reset();
   };
@@ -125,14 +173,17 @@ export function FormCreateCard({ useToggle, color }: FormCreateCardProps) {
       />
       {formState.errors.description && (
         <span className="text-xs font-medium text-red-600">
-          Campo obrigatório
+          Campo obrigatório.
         </span>
       )}
-      {errorSelected && !peopleSelected.length && (
-        <span className="text-xs font-medium text-red-600">
-          Selecione alguém para cumprir essa tarefa
-        </span>
-      )}
+
+      <Datepicker
+        value={startDate}
+        label="Data de entrega"
+        dateFormat="DD/MM/YYYY"
+        onChange={(e) => setStartDate(e.value)}
+      />
+
       <div className="relative">
         <Select
           data={myData}
@@ -146,6 +197,18 @@ export function FormCreateCard({ useToggle, color }: FormCreateCardProps) {
             placeholder: "Selecione alguém...",
           }}
         />
+      </div>
+      <div className="flex flex-col pb-4">
+        {errorSelected.date.value && (
+          <span className="px-2 text-xs font-medium text-red-600">
+            {errorSelected.date.message}
+          </span>
+        )}
+        {errorSelected.members.value && (
+          <span className="px-2 text-xs font-medium text-red-600">
+            {errorSelected.members.message}
+          </span>
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-2">
