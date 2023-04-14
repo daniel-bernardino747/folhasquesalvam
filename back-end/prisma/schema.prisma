@@ -41,6 +41,7 @@ model Goal {
   title        String       @db.VarChar(255)
   description  String       @db.Text
   status       Status       @default(DO)
+  difficulty   Difficulty   @default(LOW)
   deliveryDate DateTime
   createdAt    DateTime     @default(now()) @map("created_at")
   updatedAt    DateTime     @updatedAt @map("updated_at")
@@ -96,4 +97,10 @@ enum Status {
   PROGRESS
   REVIEW
   DONE
+}
+
+enum Difficulty {
+  HIGH
+  MEDIUM
+  LOW
 }
