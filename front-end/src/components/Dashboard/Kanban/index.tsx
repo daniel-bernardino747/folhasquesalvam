@@ -1,6 +1,5 @@
 "use client";
 import { use, useState } from "react";
-import clsx from "clsx";
 
 import { UnauthorizatedError } from "@/errors";
 import { getData } from "./fetch";
@@ -70,6 +69,7 @@ export function Kanban({ sessionId }: KanbanProps) {
             handleDrop={handleDrop}
             labelName={title}
             statusDefault={status}
+            canCreateCard={status === "DO"}
           />
         );
       })}
