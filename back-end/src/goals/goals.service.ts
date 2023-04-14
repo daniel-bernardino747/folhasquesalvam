@@ -4,6 +4,11 @@ import { CreateGoalDto } from './dto/create-goal.dto';
 import { UpdateGoalDto } from './dto/update-goal.dto';
 import { PointsService } from 'src/points/points.service';
 import { Role, Roles } from 'src/roles.decorator';
+import { Goal } from '@prisma/client';
+import { statusToLabelMapping } from './types/statusToLabelMapping';
+import { Label } from './types/Label';
+
+type GoalWithLabel = Goal & { label: Label[keyof Label] };
 
 @Injectable()
 export class GoalsService {
@@ -31,8 +36,8 @@ export class GoalsService {
   }
 
   @Roles(Role.DIRECTOR, Role.LEADER, Role.TEAM)
-  findAllByMemberId(id: number) {
-    return this.prismaService.goal.findMany({
+  async findAllByMemberId(id: number) {
+    const goals = await this.prismaService.goal.findMany({
       where: {
         MemberGoal: {
           every: {
@@ -40,7 +45,18 @@ export class GoalsService {
           },
         },
       },
+      include: {
+        MemberGoal: {
+          select: {
+            memberId: true,
+          },
+        },
+      },
     });
+
+    const goalsWithLabel = this.addLabelsToGoals(goals);
+
+    return goalsWithLabel;
   }
 
   @Roles(Role.DIRECTOR, Role.LEADER, Role.TEAM)
@@ -72,5 +88,17 @@ export class GoalsService {
   @Roles(Role.DIRECTOR)
   remove(id: number) {
     return this.prismaService.goal.delete({ where: { id } });
+  }
+
+  private addLabelsToGoals(goals: Goal[]): GoalWithLabel[] {
+    return goals.map((goal) => {
+      const status = goal.status;
+
+      const label = statusToLabelMapping[status].getLabel(goal);
+
+      label as Label[keyof Label];
+
+      return { ...goal, label };
+    });
   }
 }

@@ -28,7 +28,7 @@ export class GoalsController {
   }
 
   @Get(':memberId/member')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('memberId') id: string) {
     return this.goalsService.findAllByMemberId(+id);
   }
 

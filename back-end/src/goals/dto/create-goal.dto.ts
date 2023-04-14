@@ -41,4 +41,8 @@ export class CreateGoalDto {
   @IsOptional()
   @ApiProperty({ default: 'DO' })
   status: 'DO' | 'DONE' | 'PROGRESS' | 'REVIEW' = 'DO';
+
+  @IsOptional()
+  @ApiProperty({ default: 'LOW' })
+  difficulty: 'LOW' | 'MEDIUM' | 'HIGH';
 }
