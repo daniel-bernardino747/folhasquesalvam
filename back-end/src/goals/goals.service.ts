@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { UpdateGoalDto } from './dto/update-goal.dto';
 import { PointsService } from 'src/points/points.service';
+import { Role, Roles } from 'src/roles.decorator';
 
 @Injectable()
 export class GoalsService {
@@ -11,24 +12,25 @@ export class GoalsService {
     private readonly pointsService: PointsService,
   ) {}
 
+  @Roles(Role.DIRECTOR, Role.LEADER)
   create(createGoalDto: CreateGoalDto) {
-    const { memberId, ...args } = createGoalDto;
+    const { membersIds, ...args } = createGoalDto;
     return this.prismaService.goal.create({
       data: {
         ...args,
         MemberGoal: {
-          connect: {
-            id: memberId,
-          },
+          createMany: { data: membersIds },
         },
       },
     });
   }
 
+  @Roles(Role.DIRECTOR)
   findAll() {
     return this.prismaService.goal.findMany({ include: { MemberGoal: true } });
   }
 
+  @Roles(Role.DIRECTOR, Role.LEADER, Role.TEAM)
   findAllByMemberId(id: number) {
     return this.prismaService.goal.findMany({
       where: {
@@ -41,6 +43,7 @@ export class GoalsService {
     });
   }
 
+  @Roles(Role.DIRECTOR, Role.LEADER, Role.TEAM)
   update(id: number, updateGoalDto: UpdateGoalDto) {
     return this.prismaService.goal.update({
       data: updateGoalDto,
@@ -49,7 +52,7 @@ export class GoalsService {
       },
     });
   }
-
+  @Roles(Role.DIRECTOR)
   async complete(id: number) {
     const goalCompleted = await this.prismaService.goal.update({
       data: {
@@ -66,6 +69,7 @@ export class GoalsService {
     return this.pointsService.addPoints(goalCompleted);
   }
 
+  @Roles(Role.DIRECTOR)
   remove(id: number) {
     return this.prismaService.goal.delete({ where: { id } });
   }

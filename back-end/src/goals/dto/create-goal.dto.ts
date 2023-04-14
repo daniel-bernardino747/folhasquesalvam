@@ -1,5 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, IsNumber, IsDate } from 'class-validator';
+import {
+  IsOptional,
+  IsString,
+  IsNumber,
+  IsArray,
+  ArrayMinSize,
+  ValidateNested,
+  IsDateString,
+} from 'class-validator';
+import { MinDateToday } from './decorator/validation.decorator';
+import { Type } from 'class-transformer';
+
+class MembersIds {
+  @IsNumber()
+  @ApiProperty()
+  memberId: number;
+}
 
 export class CreateGoalDto {
   @IsString()
@@ -10,11 +26,15 @@ export class CreateGoalDto {
   @ApiProperty()
   description: string;
 
-  @IsNumber()
-  @ApiProperty()
-  memberId: number;
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => MembersIds)
+  @ApiProperty({ type: [MembersIds] })
+  membersIds: MembersIds[];
 
-  @IsDate()
+  @IsDateString()
+  @MinDateToday()
   @ApiProperty()
   deliveryDate: Date;
 
