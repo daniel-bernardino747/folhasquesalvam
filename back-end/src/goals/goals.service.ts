@@ -42,7 +42,7 @@ export class GoalsService {
       where: {
         MemberGoal: {
           every: {
-            id: member.id,
+            memberId: member.id,
           },
         },
       },
