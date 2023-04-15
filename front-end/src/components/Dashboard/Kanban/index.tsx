@@ -4,62 +4,76 @@ import { use, useState } from "react";
 import { UnauthorizatedError } from "@/errors";
 import { getData } from "./fetch";
 import { ColumnKanban } from "./Column";
+import ErrorPage from "@/components/ErrorPage";
+import { APIGoals, Goal, Status } from "@/types";
 
-export function Kanban({ sessionId }: KanbanProps) {
-  const { data, error }: APIGoals = use(getData(sessionId));
+export function Kanban({ sessionId, userId }: KanbanProps) {
+  const { data, error }: APIGoals = use(getData({ sessionId, userId }));
 
-  const [tasks, setTasks] = useState({
+  const [goals, setGoals] = useState({
     DO: {
-      list: test.filter((task) => task.status === "DO"),
+      list: data?.filter((goal) => goal.status === "DO"),
       title: "To Do",
       color: "#5030E5",
     },
     PROGRESS: {
-      list: test.filter((task) => task.status === "PROGRESS"),
+      list: data?.filter((goal) => goal.status === "PROGRESS"),
       title: "In Progress",
       color: "#FFA500",
     },
     DONE: {
-      list: test.filter((task) => task.status === "DONE"),
+      list: data?.filter((goal) => ["DONE", "REVIEW"].includes(goal.status)),
       title: "Done",
       color: "#8BC48A",
     },
   });
-
   if (error instanceof UnauthorizatedError) {
     return <div>Ocorreu um erro de autorização.</div>;
   }
 
-  // if (!data || data?.length === 0) {
-  //   return <ErrorPage>Nenhum dado encontrado.</ErrorPage>;
-  // }
+  if (!data || data?.length === 0) {
+    return <ErrorPage>Nenhum dado encontrado.</ErrorPage>;
+  }
 
   const handleDrop = (
     event: React.DragEvent<HTMLDivElement>,
-    newStatus: "DO" | "PROGRESS" | "DONE"
+    newStatus: Status
   ) => {
     event.preventDefault();
-    const taskId = event.dataTransfer.getData("taskId");
-    const task = test.find((task) => task.id === +taskId);
+    const goalId = event.dataTransfer.getData("goalId");
+    const goal = data.find((goal) => goal.id === +goalId);
+    console.log("essa deveria ser a coluna que eu estou indo: ", newStatus);
 
-    if (task) {
-      setTasks((prevTasks) => {
-        const updatedTasks = { ...prevTasks };
+    if (goal) {
+      setGoals((prevGoals) => {
+        const prevColum = goal.status === "REVIEW" ? "DONE" : goal.status;
+        console.log("e essa de onde sai: ", prevColum);
 
-        updatedTasks[task.status].list = prevTasks[task.status].list.filter(
-          (t) => t.id !== +taskId
+        const updatedGoals = JSON.parse(JSON.stringify(prevGoals));
+
+        const prevGoalsList = prevGoals[prevColum].list as Goal[];
+
+        updatedGoals[prevColum].list = prevGoalsList.filter(
+          (t) => t.id !== +goalId
         );
+        console.log({ shouldBeEmpty: updatedGoals[prevColum].list });
 
-        task.status = newStatus;
-        updatedTasks[task.status].list = [...prevTasks[task.status].list, task];
-        return updatedTasks;
+        // goal.status = newStatus === "DONE" ? "REVIEW" : newStatus;
+
+        const newColumn = newStatus as "DO" | "PROGRESS" | "DONE";
+
+        const updatedGoal = prevGoals[newColumn].list as Goal[];
+
+        updatedGoals[newColumn].list = [...updatedGoal, goal];
+        console.log({ updatedGoals });
+        return updatedGoals;
       });
     }
   };
 
   return (
     <div className="grid gap-4 pt-6 lg:grid-cols-3">
-      {Object.entries(tasks).map(([statusString, { list, title, color }]) => {
+      {Object.entries(goals).map(([statusString, { list, title, color }]) => {
         const status = statusString as "DO" | "DONE" | "PROGRESS";
         return (
           <ColumnKanban
@@ -77,49 +91,9 @@ export function Kanban({ sessionId }: KanbanProps) {
   );
 }
 
-interface APIGoals {
-  data?: string[];
-  error?: unknown;
-}
 interface KanbanProps {
   sessionId: string | null | undefined;
   isLoaded: boolean;
   isSignedIn: boolean | undefined;
+  userId: string | null | undefined;
 }
-interface Task {
-  id: number;
-  name: string;
-  status: "DO" | "PROGRESS" | "DONE";
-  description: string;
-  label: string;
-}
-const test: Task[] = [
-  {
-    id: 1,
-    name: "Brainstorming1",
-    status: "PROGRESS",
-    label: "Test",
-    description: "bla sikjda çaldk isjdak aisjdis sjad dijsm sks sij sdsd",
-  },
-  {
-    id: 2,
-    name: "Brainstorming2",
-    status: "PROGRESS",
-    label: "Test",
-    description: "bla sikjda çaldk isjdak aisjdis sjad dijsm sks sij sdsd",
-  },
-  {
-    id: 3,
-    name: "Brainstorming3",
-    status: "DONE",
-    label: "Test",
-    description: "bla sikjda çaldk isjdak aisjdis sjad dijsm sks sij sdsd",
-  },
-  {
-    id: 4,
-    name: "Brainstorming4",
-    status: "DO",
-    label: "Test",
-    description: "bla sikjda çaldk isjdak aisjdis sjad dijsm sks sij sdsd",
-  },
-];

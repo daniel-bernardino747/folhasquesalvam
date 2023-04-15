@@ -1,9 +1,14 @@
 import { api } from "@/config/api";
 import { UnauthorizatedError } from "@/errors";
 
-export async function getData(sessionId: string | undefined | null) {
+interface GetDataProps {
+  sessionId: string | undefined | null;
+  userId: string | undefined | null;
+}
+
+export async function getData({ userId, sessionId }: GetDataProps) {
   try {
-    const response = await fetch(`${api.baseURL}/api/goals`, {
+    const response = await fetch(`${api.baseURL}/api/goals/${userId}/member`, {
       method: "GET",
       cache: "no-cache",
       headers: { Authorization: `Bearer ${sessionId}` },

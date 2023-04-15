@@ -1,10 +1,11 @@
 import { useCreateCard } from "@/hooks";
-import { renderTask } from "../Task";
+import { renderGoal } from "../Goal";
+import { Goal } from "@/types";
 
 interface ColumnKanbanProps {
   labelName: string;
   color: string;
-  data: any;
+  data?: Goal[];
   handleDrop: (
     event: React.DragEvent<HTMLDivElement>,
     newStatus: "DO" | "PROGRESS" | "DONE"
@@ -40,7 +41,7 @@ export function ColumnKanban(props: ColumnKanbanProps) {
             />
             {labelName}
             <div className="ml-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#E0E0E0] text-[10px] font-bold text-[#625F6D]">
-              {data.length}
+              {data?.length}
             </div>
           </h2>
           {canCreateCard && createCardComponent}
@@ -54,7 +55,7 @@ export function ColumnKanban(props: ColumnKanbanProps) {
       </div>
       <div className="flex w-full flex-col items-center gap-3 py-4">
         {cardInputComponent}
-        {data.map(renderTask)}
+        {data?.map(renderGoal)}
       </div>
     </div>
   );
