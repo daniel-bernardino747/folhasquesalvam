@@ -36,12 +36,13 @@ export class GoalsService {
   }
 
   @Roles(Role.DIRECTOR, Role.LEADER, Role.TEAM)
-  async findAllByMemberId(id: number) {
+  async findAllByMemberId(id: string) {
+    const member = await this.findMemberByClerkId(id);
     const goals = await this.prismaService.goal.findMany({
       where: {
         MemberGoal: {
           every: {
-            id,
+            id: member.id,
           },
         },
       },
@@ -99,6 +100,16 @@ export class GoalsService {
       label as Label[keyof Label];
 
       return { ...goal, label };
+    });
+  }
+
+  private findMemberByClerkId(id: string) {
+    return this.prismaService.member.findFirst({
+      where: {
+        User: {
+          idClerk: id,
+        },
+      },
     });
   }
 }
