@@ -9,6 +9,7 @@ import { APIGoals, Goal, Status } from "@/types";
 
 export function Kanban({ sessionId, userId }: KanbanProps) {
   const { data, error }: APIGoals = use(getData({ sessionId, userId }));
+  console.log({ data });
 
   const [goals, setGoals] = useState({
     DO: {
@@ -80,6 +81,7 @@ export function Kanban({ sessionId, userId }: KanbanProps) {
             key={status}
             color={color}
             data={list}
+            setGoals={setGoals}
             handleDrop={handleDrop}
             labelName={title}
             statusDefault={status}

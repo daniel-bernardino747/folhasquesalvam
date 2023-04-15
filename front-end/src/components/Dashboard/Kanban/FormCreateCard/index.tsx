@@ -25,6 +25,7 @@ export function FormCreateCard({
   useToggle,
   color,
   members,
+  setData,
 }: FormCreateCardProps) {
   const { sessionId } = useAuth();
   const [isVisible, toggle] = useToggle;
@@ -77,6 +78,16 @@ export function FormCreateCard({
             icon: "success",
             title: "Eba!",
             text: "Formulário enviado com sucesso!",
+          });
+          setData((prevGoals: any) => {
+            const newGoal = response.data;
+            const cloneToUpdate = JSON.parse(JSON.stringify(prevGoals));
+
+            const prevList = prevGoals[newGoal.status].list;
+            newGoal.label = "Low";
+
+            cloneToUpdate[newGoal.status].list = [...prevList, newGoal];
+            return cloneToUpdate;
           });
           handleFormReset();
         }

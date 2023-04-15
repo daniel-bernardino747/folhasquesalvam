@@ -12,19 +12,29 @@ interface ColumnKanbanProps {
   ) => void;
   statusDefault: "DO" | "PROGRESS" | "DONE";
   canCreateCard: boolean;
+  setGoals: any;
 }
 
 export function ColumnKanban(props: ColumnKanbanProps) {
-  const { labelName, color, data, handleDrop, statusDefault, canCreateCard } =
-    props;
+  const {
+    labelName,
+    color,
+    data,
+    handleDrop,
+    statusDefault,
+    canCreateCard,
+    setGoals,
+  } = props;
 
   const colorDefault = color || "#000";
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   };
-  const { createCardComponent, cardInputComponent } =
-    useCreateCard(colorDefault);
+  const { createCardComponent, cardInputComponent } = useCreateCard(
+    colorDefault,
+    setGoals
+  );
 
   return (
     <div
