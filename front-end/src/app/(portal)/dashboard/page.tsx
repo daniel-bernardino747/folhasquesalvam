@@ -1,6 +1,5 @@
 "use client";
-import { Suspense, use } from "react";
-import Loading from "@/app/loading";
+import { use } from "react";
 
 import { Kanban, ViewMembers } from "@/components";
 import { useAuth } from "@clerk/nextjs";
