@@ -1,4 +1,4 @@
-function validateForm(peopleSelected: any[], startDate: Date | null) {
+export function validateForm(peopleSelected: any[], startDate: Date | null) {
   const errorSelected = {
     date: { value: false, message: "" },
     members: { value: false, message: "" },

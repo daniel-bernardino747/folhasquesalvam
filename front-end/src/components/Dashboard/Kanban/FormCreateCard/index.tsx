@@ -10,6 +10,10 @@ import { ErrorForm } from "./ErrorForm";
 import { FormButtons } from "./FormButtons";
 import DatePicker from "react-datepicker";
 import { FormCreateCardProps, FormData } from "@/types";
+import { postGoal } from "./fetch";
+import Swal from "sweetalert2";
+import { useAuth } from "@clerk/nextjs";
+import { validateForm } from "./validateForm";
 
 setOptions({
   locale: localePtBR,
@@ -22,6 +26,7 @@ export function FormCreateCard({
   color,
   members,
 }: FormCreateCardProps) {
+  const { sessionId } = useAuth();
   const [isVisible, toggle] = useToggle;
   const { register, handleSubmit, formState, reset } = useForm<FormData>();
 
@@ -40,12 +45,44 @@ export function FormCreateCard({
   const [selectedPeople, setPeopleSelected] = useState([]);
   const [startDate, setStartDate] = useState<Date | null>(null);
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     const formErrors = validateForm(selectedPeople, startDate);
     setErrorSelected(formErrors);
 
     if (!formErrors.date.value && !formErrors.members.value) {
-      console.log(data);
+      try {
+        const requestBody = {
+          title: data.title,
+          description: data.description,
+          membersIds: selectedPeople.map((personId) => ({
+            memberId: personId,
+          })),
+          deliveryDate: startDate as Date,
+        };
+
+        const response = await postGoal({
+          sessionId: sessionId as string,
+          body: requestBody,
+        });
+
+        if (response.error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        } else {
+          Swal.fire({
+            icon: "success",
+            title: "Eba!",
+            text: "Formulário enviado com sucesso!",
+          });
+          handleFormReset();
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
