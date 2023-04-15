@@ -31,3 +31,9 @@ export type Label =
 export type Difficulty = "Low" | "Medium" | "High";
 
 export type Status = "DO" | "PROGRESS" | "REVIEW" | "DONE";
+
+export interface GoalList {
+  list: Goal[] | undefined;
+  title: string;
+  color: string;
+}
