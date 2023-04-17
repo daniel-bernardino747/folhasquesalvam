@@ -8,9 +8,10 @@ import {
   Delete,
   NotFoundException,
   ParseIntPipe,
+  Req,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { Role } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 
 import { MembersService } from './members.service';
 
@@ -21,6 +22,7 @@ import { MemberEntity } from './entities/member.entity';
 import { Public } from 'src/auth/auth.decorator';
 import { Roles } from 'src/roles.decorator';
 
+type UserWithMember = User & { Member: { role: Role }[] };
 @Controller('api/members')
 @ApiTags('members')
 export class MembersController {
@@ -40,13 +42,15 @@ export class MembersController {
     return this.membersService.findAll();
   }
 
-  @Get(':id')
+  @Get('me')
   @ApiOkResponse({ type: MemberEntity })
-  async findOne(@Param('id', ParseIntPipe) id: number) {
-    const member = await this.membersService.findOne(+id);
+  async findOne(@Req() req: Request & { user: UserWithMember }) {
+    const user = req.user;
+
+    const member = await this.membersService.findOne(user.id, user.idClerk);
 
     if (!member) {
-      throw new NotFoundException(`Member with id: ${id} not found`);
+      throw new NotFoundException(`Member with id: ${user.id} not found`);
     }
     return member;
   }

@@ -5,13 +5,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  EmailAddress,
-  ExternalAccount,
-  PhoneNumber,
-  User as UserClerk,
-  Web3WalletJSON,
-} from '@clerk/clerk-sdk-node';
+import { User as UserClerk } from '@clerk/clerk-sdk-node';
 import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosError } from 'axios';
 import { Role, User } from '@prisma/client';

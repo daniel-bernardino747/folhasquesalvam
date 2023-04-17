@@ -61,8 +61,17 @@ export class MembersService {
     return [...clerkIdByPhoto.values()];
   }
 
-  findOne(id: number) {
-    return this.prismaService.member.findUnique({ where: { id } });
+  async findOne(userId: number, clerkId: string) {
+    const user = await this.clerkService.users.getUser(clerkId);
+    const member = (await this.prismaService.member.findUnique({
+      where: { id: userId },
+    })) as MemberWithProfileImage;
+
+    member.name = `${user.firstName} ${user.lastName}`;
+    member.profileImageUrl = user.profileImageUrl;
+    member.User = { idClerk: clerkId };
+
+    return member;
   }
 
   update(id: number, updateMemberDto: UpdateMemberDto) {
