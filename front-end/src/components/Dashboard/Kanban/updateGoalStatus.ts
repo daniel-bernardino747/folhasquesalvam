@@ -1,10 +1,13 @@
 import { Goal, GoalList, Status } from "@/types";
+import { patchGoalStatus } from "./fetch";
+import Swal from "sweetalert2";
 
-export function updateGoalStatus(
+export async function updateGoalStatus(
   goals: Record<Status, GoalList>,
   goalId: string,
-  newStatus: Status
-): Record<Status, GoalList> {
+  newStatus: Status,
+  sessionId: string
+): Promise<Record<Status, GoalList>> {
   const allGoals = Object.values(goals).reduce(
     (prev: Goal[], current: GoalList) => {
       return [...prev, ...(current.list || [])];
@@ -12,27 +15,46 @@ export function updateGoalStatus(
     []
   );
 
-  const goal = allGoals.find((goal) => goal.id === +goalId);
+  const prevGoal = allGoals.find((goal) => goal.id === +goalId) as Goal;
 
-  if (goal) {
-    const updatedGoals = JSON.parse(JSON.stringify(goals));
-    const prevColumn = goal.status === "REVIEW" ? "DONE" : goal.status;
-    const newColumn = newStatus as "DO" | "PROGRESS" | "DONE";
+  const requestBody = {
+    status: newStatus === "DONE" ? "REVIEW" : newStatus,
+  };
 
-    const prevList = updatedGoals[prevColumn].list as Goal[];
-    const updatedList = updatedGoals[newColumn].list as Goal[];
+  const response = await patchGoalStatus({
+    sessionId: sessionId as string,
+    body: requestBody,
+    goalId: +goalId,
+  });
+  try {
+    if (response.error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        footer: '<a href="">Why do I have this issue?</a>',
+      });
+    } else {
+      const goal = response.data;
+      console.log({ goal });
 
-    const filteredList = prevList.filter((t) => t.id !== +goalId);
+      const updatedGoals = JSON.parse(JSON.stringify(goals));
+      const prevColumn =
+        prevGoal.status === "REVIEW" ? "DONE" : prevGoal.status;
 
-    updatedGoals[prevColumn].list = filteredList;
+      const prevList = updatedGoals[prevColumn].list as Goal[];
+      const filteredList = prevList.filter((t) => t.id !== +goalId);
 
-    const updatedStatus = newStatus === "DONE" ? "REVIEW" : newStatus;
+      const newColumn = newStatus as "DO" | "PROGRESS" | "DONE";
+      const updatedList = updatedGoals[newColumn].list as Goal[];
 
-    goal.status = updatedStatus;
+      updatedGoals[prevColumn].list = filteredList;
+      updatedGoals[newColumn].list = [...updatedList, goal];
 
-    updatedGoals[newColumn].list = [...updatedList, goal];
-
-    return updatedGoals;
+      return updatedGoals;
+    }
+  } catch (error) {
+    console.error(error);
   }
 
   return goals;

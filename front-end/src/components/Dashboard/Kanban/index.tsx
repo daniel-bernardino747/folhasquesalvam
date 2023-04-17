@@ -24,7 +24,7 @@ export function Kanban({ sessionId, userId }: KanbanProps) {
     return <ErrorPage>Nenhum dado encontrado.</ErrorPage>;
   }
 
-  const handleDrop = (
+  const handleDrop = async (
     event: React.DragEvent<HTMLDivElement>,
     newStatus: Status
   ) => {
@@ -32,7 +32,12 @@ export function Kanban({ sessionId, userId }: KanbanProps) {
 
     const goalId = event.dataTransfer.getData("goalId");
 
-    const updatedGoals = updateGoalStatus(goals, goalId, newStatus);
+    const updatedGoals = await updateGoalStatus(
+      goals,
+      goalId,
+      newStatus,
+      sessionId as string
+    );
 
     setGoals(updatedGoals);
   };
