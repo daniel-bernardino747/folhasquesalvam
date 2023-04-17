@@ -18,18 +18,18 @@ const navItems = {
     name: "Avisos",
     icon: <BsChatDots />,
   },
-  "/goals": {
-    name: "Metas",
-    icon: <BsUiChecksGrid />,
-  },
+  // "/goals": {
+  //   name: "Metas",
+  //   icon: <BsUiChecksGrid />,
+  // },
   "/members": {
     name: "Membros",
     icon: <HiOutlineUsers />,
   },
-  "/settings": {
-    name: "Configuração",
-    icon: <AiOutlineSetting />,
-  },
+  // "/settings": {
+  //   name: "Configuração",
+  //   icon: <AiOutlineSetting />,
+  // },
 };
 
 const configStyleSideBar = {
@@ -56,6 +56,9 @@ const configStyleSideBar = {
 
 export function SideBar() {
   let pathname = usePathname() || "/";
+  if (pathname.includes("/members/")) {
+    pathname = "/members";
+  }
   const { collapseSidebar, collapsed } = pro.useProSidebar();
 
   return (
