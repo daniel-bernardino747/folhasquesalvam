@@ -1,13 +1,19 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Role } from '@prisma/client';
 import { ROLES_KEY } from './roles.decorator';
+import { AuthService } from './auth/auth.service';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private authService: AuthService, private reflector: Reflector) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
       context.getHandler(),
       context.getClass(),
@@ -15,17 +21,22 @@ export class RolesGuard implements CanActivate {
     if (!requiredRoles) {
       return true;
     }
-    console.log('vou passar pelo rolesGuard');
+
     const request = context.switchToHttp().getRequest();
 
     if (!request?.user) {
-      return false;
+      throw new UnauthorizedException();
     }
-    console.log('estoi aqui =>', request.user);
 
     // get roles of user by id
-    const roles = '';
+    const userId = request.user.id;
+    const roles = await this.authService.getUserRoles(userId);
 
-    return requiredRoles.some((role) => roles?.includes(role));
+    const isAuthorized = requiredRoles.some((role) => roles?.includes(role));
+    if (!isAuthorized) {
+      throw new UnauthorizedException();
+    }
+
+    return true;
   }
 }

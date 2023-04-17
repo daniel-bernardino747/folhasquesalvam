@@ -48,6 +48,18 @@ export class AuthService {
     return { session, user };
   }
 
+  async getUserRoles(userId: number): Promise<Role[]> {
+    const user = await this.prismaService.member.findMany({
+      where: {
+        userId: userId,
+      },
+      select: {
+        role: true,
+      },
+    });
+    return user.map((item) => item.role);
+  }
+
   private async registerUser(id: string) {
     const { data } = await this.getUserClerk(id);
     const userClerk: UserCleckAPI = data;
