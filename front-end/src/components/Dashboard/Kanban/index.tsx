@@ -8,8 +8,10 @@ import ErrorPage from "@/components/ErrorPage";
 import { APIGoals, GoalList, Status } from "@/types";
 import { mergeGoalsByStatus } from "./mergeGoalsByStatus";
 import { updateGoalStatus } from "./updateGoalStatus";
+import { useUserContext } from "@/contexts";
 
 export function Kanban({ sessionId, userId }: KanbanProps) {
+  const { user } = useUserContext();
   const { data, error }: APIGoals = use(getData({ sessionId, userId }));
 
   const [goals, setGoals] = useState<Record<Status, GoalList>>(() =>
@@ -57,7 +59,9 @@ export function Kanban({ sessionId, userId }: KanbanProps) {
               handleDrop={handleDrop}
               labelName={title}
               statusDefault={status}
-              canCreateCard={status === "DO"}
+              canCreateCard={
+                status === "DO" && user.member?.role === "DIRECTOR"
+              }
             />
           );
         })}

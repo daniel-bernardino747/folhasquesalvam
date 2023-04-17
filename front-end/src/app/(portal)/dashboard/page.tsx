@@ -7,8 +7,9 @@ import { APIMembers, getAllMembers } from "./fetch";
 
 export default function Dashboard() {
   const authProps = useAuth();
+
   const { sessionId } = authProps;
-  const { data, error }: APIMembers = use(getAllMembers(sessionId));
+  const { data }: APIMembers = use(getAllMembers(sessionId));
 
   return (
     <div className="h-screen">
