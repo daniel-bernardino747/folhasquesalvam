@@ -9,7 +9,7 @@ import { APIGoals, GoalList, Status } from "@/types";
 import { mergeGoalsByStatus } from "./mergeGoalsByStatus";
 import { updateGoalStatus } from "./updateGoalStatus";
 import { useUserContext } from "@/contexts";
-import Swal from "sweetalert2";
+import { submitRequestGoals } from "./submitRequestGoals";
 
 export function Kanban({ sessionId, userId }: KanbanProps) {
   const { user } = useUserContext();
@@ -28,18 +28,7 @@ export function Kanban({ sessionId, userId }: KanbanProps) {
   }
 
   if (data.length === 0) {
-    Swal.fire({
-      icon: "info",
-      title: "Sem metas :(",
-      text: "Reparei que você não tem nenhuma meta por enquanto, vamos solicitar metas para bater?",
-      showCancelButton: true,
-      confirmButtonText: "Quero metas!",
-      cancelButtonText: "Agora não.",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire("Aguarde contato dos nossos diretores.", "", "success");
-      }
-    });
+    submitRequestGoals(sessionId as string, user.member?.id as number);
   }
 
   const handleDrop = async (
