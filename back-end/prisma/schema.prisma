@@ -32,6 +32,7 @@ model Member {
   updatedAt  DateTime     @updatedAt @map("updated_at")
   MemberGoal MemberGoal[]
   Points     Points[]
+  Alerts     Alerts[]
 
   @@map("members")
 }
@@ -81,6 +82,20 @@ model Points {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("points")
+}
+
+model Alerts {
+  id           Int       @id @default(autoincrement())
+  member       Member    @relation(fields: [memberId], references: [id])
+  memberId     Int       @map("member_id")
+  alertType    String    @map("alert_type")
+  description  String?
+  isResolved   Boolean   @default(false) @map("is_resolved")
+  resolvedDate DateTime? @map("resolved_date")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  @@map("alerts")
 }
 
 enum Role {
