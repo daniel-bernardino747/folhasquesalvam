@@ -4,6 +4,7 @@ import { PrismaService } from '../domain/prisma/prisma.service';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { Member } from '@prisma/client';
+import { User } from '@clerk/clerk-sdk-node';
 
 @Injectable()
 export class MembersService {
@@ -61,15 +62,25 @@ export class MembersService {
     return [...clerkIdByPhoto.values()];
   }
 
-  async findOne(userId: number, clerkId: string) {
-    const user = await this.clerkService.users.getUser(clerkId);
+  async findOne(userId: number, clerkId?: string) {
+    let user = {} as User;
+
+    if (clerkId) {
+      user = await this.clerkService.users.getUser(clerkId);
+    } else {
+      const { idClerk } = await this.prismaService.user.findFirst({
+        where: { id: userId },
+      });
+      user = await this.clerkService.users.getUser(idClerk);
+    }
+
     const member = (await this.prismaService.member.findUnique({
       where: { id: userId },
     })) as MemberWithProfileImage;
 
     member.name = `${user.firstName} ${user.lastName}`;
     member.profileImageUrl = user.profileImageUrl;
-    member.User = { idClerk: clerkId };
+    member.User = { idClerk: user.id };
 
     return member;
   }

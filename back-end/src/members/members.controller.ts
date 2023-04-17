@@ -44,13 +44,24 @@ export class MembersController {
 
   @Get('me')
   @ApiOkResponse({ type: MemberEntity })
-  async findOne(@Req() req: Request & { user: UserWithMember }) {
+  async findMe(@Req() req: Request & { user: UserWithMember }) {
     const user = req.user;
 
     const member = await this.membersService.findOne(user.id, user.idClerk);
 
     if (!member) {
       throw new NotFoundException(`Member with id: ${user.id} not found`);
+    }
+    return member;
+  }
+
+  @Get(':id')
+  @ApiOkResponse({ type: MemberEntity })
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const member = await this.membersService.findOne(id);
+
+    if (!member) {
+      throw new NotFoundException(`Member with id: ${id} not found`);
     }
     return member;
   }
