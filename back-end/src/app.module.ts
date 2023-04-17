@@ -11,9 +11,17 @@ import { PointsModule } from './points/points.module';
 import { RolesGuard } from './roles.guard';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthModule } from './auth/auth.module';
+import { AlertsModule } from './alerts/alerts.module';
 
 @Module({
-  imports: [MembersModule, UsersModule, GoalsModule, PointsModule, AuthModule],
+  imports: [
+    MembersModule,
+    UsersModule,
+    GoalsModule,
+    PointsModule,
+    AuthModule,
+    AlertsModule,
+  ],
   controllers: [AppController],
   providers: [
     { provide: APP_GUARD, useClass: AuthGuard },
