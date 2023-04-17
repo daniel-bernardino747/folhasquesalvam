@@ -61,13 +61,16 @@ export class GoalsService {
   }
 
   @Roles(Role.DIRECTOR, Role.LEADER, Role.TEAM)
-  update(id: number, updateGoalDto: UpdateGoalDto) {
-    return this.prismaService.goal.update({
+  async update(id: number, updateGoalDto: UpdateGoalDto) {
+    const goal = await this.prismaService.goal.update({
       data: updateGoalDto,
       where: {
         id,
       },
     });
+    const [goalWithLabel] = this.addLabelsToGoals([goal]);
+
+    return goalWithLabel;
   }
   @Roles(Role.DIRECTOR)
   async complete(id: number) {
