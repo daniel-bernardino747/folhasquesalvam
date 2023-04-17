@@ -18,7 +18,7 @@ export function NavBar() {
           </Link>
         </h1>
         <ul className="hidden cursor-pointer items-center pr-10 text-base font-semibold md:flex">
-          <li className={optionClass}>
+          {/* <li className={optionClass}>
             <Link href="/sobre">Sobre nós</Link>
           </li>
           <li className={optionClass}>
@@ -26,15 +26,15 @@ export function NavBar() {
           </li>
           <li className={optionClass}>
             <Link href="/parceiros">Parceiros</Link>
-          </li>
+          </li> */}
           <li className={optionClass}>
             <Link href="/sign-in">Login</Link>
           </li>
-          <li className="ml-4 flex h-10 w-40 items-center justify-center rounded-xl bg-amber-300 transition-all duration-100 hover:scale-105">
+          {/* <li className="ml-4 flex h-10 w-40 items-center justify-center rounded-xl bg-amber-300 transition-all duration-100 hover:scale-105">
             <p className="text-xl text-[#305230]">
               <Link href="/seja-uma-folha">Seja uma folha</Link>
             </p>
-          </li>
+          </li> */}
         </ul>
         <button className="none group mx-2 block rounded py-3 focus:outline md:hidden">
           <HiMenu className="hover:fill-amber-300" size="2em" />
@@ -43,7 +43,7 @@ export function NavBar() {
               <li className={optionClassMobile}>
                 <Link href="/">Home</Link>
               </li>
-              <li className={optionClassMobile}>
+              {/* <li className={optionClassMobile}>
                 <Link href="/sobre">Sobre nós</Link>
               </li>
               <li className={optionClassMobile}>
@@ -51,15 +51,15 @@ export function NavBar() {
               </li>
               <li className={optionClassMobile}>
                 <Link href="/parceiros">Parceiros</Link>
-              </li>
+              </li> */}
               <li className={optionClassMobile}>
                 <Link href="/login">Login</Link>
               </li>
-              <li className="absolute bottom-4 flex h-24 w-40 items-center justify-center rounded-xl bg-amber-300 px-4">
+              {/* <li className="absolute bottom-4 flex h-24 w-40 items-center justify-center rounded-xl bg-amber-300 px-4">
                 <p className="text-xl font-bold text-[#305230]">
                   <Link href="/seja-uma-folha">Seja uma folha</Link>
                 </p>
-              </li>
+              </li> */}
             </ul>
           </div>
         </button>
