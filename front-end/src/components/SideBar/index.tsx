@@ -7,6 +7,7 @@ import { HeaderNavbar } from "./HeaderNavbar";
 import { AiOutlineSetting } from "react-icons/ai";
 import { BsGrid, BsChatDots, BsUiChecksGrid } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi";
+import Link from "next/link";
 
 const navItems = {
   "/dashboard": {
@@ -68,7 +69,7 @@ export function SideBar() {
         {Object.entries(navItems).map(([path, { name, icon }]) => {
           const isActive = path === pathname;
           return (
-            <pro.MenuItem key={path}>
+            <pro.MenuItem key={path} component={<Link href={path} />}>
               <div
                 className={clsx("flex", {
                   "justify-center": collapsed,

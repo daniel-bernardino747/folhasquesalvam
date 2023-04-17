@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Logo from "../../../../public/folhas-logo.png";
+import Logo from "../../../public/folhas-logo.png";
 import { AiOutlineDoubleLeft } from "react-icons/ai";
 import clsx from "clsx";
 
