@@ -16,7 +16,7 @@ export async function getAllMembers(sessionId: string | undefined | null) {
   }
 }
 export interface APIMembers {
-  data?: string[];
+  data?: Member[];
   error?: unknown;
 }
 

@@ -10,7 +10,7 @@ export interface Member {
   id: number;
   teamId: number;
   userId: number;
-  role: string;
+  role: Role;
   createdAt: string;
   updatedAt: string;
   name: string;
