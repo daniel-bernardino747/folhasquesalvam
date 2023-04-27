@@ -1,147 +1,227 @@
-<div>
-  <h1 align="left">Folhas Que Salvam 🌍</h1>
-  <img alt="os-linux" src="https://img.shields.io/static/v1?label=os&message=Linux&color=459a2b&style=flat-square&logo=ghost" />
-  <img alt="npm-8.15.0" src="https://img.shields.io/static/v1?label=npm&message=8.15.0&color=459a2b&style=flat-square" />
-  <a href="https://github.com/daniel-bernardino747/Shortly-B/blob/main/LICENCE">
-    <img alt="licence-MPL" src="https://img.shields.io/static/v1?label=licence&message=MPL&color=459a2b&style=flat-square" />
-  </a>  
-</div>
+<h1 align="center">
+    <img alt="Folhas Que Salvam" title="#Folhas" src="./assets/banner.png" />
+</h1>
 
-Um website para o projeto **Folhas Que Salvam**, onde possui as principais informações de divulgação do projeto, bem como área restrita para participantes, membros e voluntários.
+<h1 align="center">
+   🌍 <a href="#" alt="site do Folhas Que Salvam"> Folhas Que Salvam </a>
+</h1>
 
-<div>
-  <a href="https://code.visualstudio.com/">
-    <img alt="vscode-icon" src="https://img.shields.io/static/v1?label=using&message=vscode&color=0176c6&logo=visual%20studio" />
-  </a>
-  <a href="https://nestjs.com/">
-    <img alt="typescript-icon" src="https://img.shields.io/static/v1?label=using&message=NestJS&color=e0444e&logo=nestjs" />
-  </a>
-  <a href="https://nextjs.org/">
-    <img alt="typescript-icon" src="https://img.shields.io/static/v1?label=using&message=Next.js&color=000000&logo=vercel" />
-  </a>
-  <a href="https://www.prisma.io/">
-    <img alt="typescript-icon" src="https://img.shields.io/static/v1?label=using&message=prisma&color=2d3748&logo=prisma" />
-  </a>
-</div>
-
-<h4 align="center"> 
-	:recycle: Em progresso :recycle:
-</h4>
+<h3 align="center">
+    🌱 Mude seus hábitos, mude o mundo! O projeto Folhas Que Salvam ensina você a se conscientizar sobre questões ambientais e adotar hábitos sustentáveis em sua rotina diária. 💚
+</h3>
 
 <p align="center">
- <a href="#shortly-api">Início</a> • 
- <a href="#requisitos">Começando</a> •  
- <a href="#tecnologias">Tecnologias</a> • 
- <a href="#autor">Autor</a>
-</p>
-______
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/daniel-bernardino747/folhasquesalvam?color=%2304D361">
 
-## Requisitos
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/daniel-bernardino747/folhasquesalvam">
+  
+  <img alt="os-linux" src="https://img.shields.io/static/v1?label=os&message=Linux&color=459a2b&style=flat-square&logo=ghost" />
+  
+  <a href="https://github.com/tgmarinho/README-ecoleta/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/daniel-bernardino747/folhasquesalvam">
+  </a>
+    
+  <img alt="License" src="https://img.shields.io/badge/license-MPL-brightgreen">
+
+  <a href="https://rocketseat.com.br">
+    <img alt="Feito por Dann" src="https://img.shields.io/badge/feito%20com-❤️-%237519C1">
+  </a>
+  
+  <img alt="npm-8.15.0" src="https://img.shields.io/static/v1?label=npm&message=8.15.0&color=459a2b&style=flat-square" />
+</p>
+
+<h4 align="center">
+  :recycle:  Em Progresso  :recycle:
+</h4>
+
+Tabela de conteúdos
+=================
+<!--ts-->
+   * [Sobre o projeto](#-sobre-o-projeto)
+   * [Funcionalidades](#-funcionalidades)
+   * [Layout](#-layout)
+     * [Web](#web)
+   * [Como executar o projeto](#-como-executar-o-projeto)
+     * [Pré-requisitos](#pré-requisitos)
+     * [Rodando o Backend (servidor)](#user-content--rodando-o-backend-servidor)
+     * [Rodando a aplicação web (Frontend)](#user-content--rodando-a-aplicação-web-frontend)
+   * [Tecnologias](#-tecnologias)
+     * [WebSite](#user-content-website--nextjs----typescript)
+     * [Server](#user-content-server--nestjs----typescript)
+   * [Como contribuir no projeto](#-como-contribuir-no-projeto)
+   * [Autor](#-autor)
+   * [Licença](#user-content--licença)
+<!--te-->
+
+
+## 💻 Sobre o projeto
+
+♻️ Folhas Que Salvam - é uma forma de mudar pessoas, empresas e entidades que precisam mudar suas rotinas de maneira sustentável.
+
+---
+
+## 🔧 Funcionalidades
+
+- [x] Usuários podem se cadastrar na plataforma web enviando:
+  - [x] Nome (opcional), email e senha
+  - [x] ou conectando-se via Google Account
+
+- [x] Os usuários tem acesso à plataforma, onde podem:
+  - [ ] Requisitar um cargo dentro do Folhas (Embaixador, Time ou Voluntário)
+  - [ ] entrar em contato com a entidade através do E-mail ou do WhatsApp.
+  
+- [x] Os usuários com cargo de Membro do Time e Diretor, podem:
+  - [x] Visualizar seu dashboard e suas metas para cumprirem.
+  - [x] Mover as metas entre as colunas ("A fazer", "Em andamento" ou "Feito").
+  - [x] Visualizar outros membros e seus respectivos cargos dentro do projeto.
+  - [ ] Visualizar os pontos obtidos de acordo com o cumprimento das metas.
+  
+- [x] Apenas os usuários com cargo de Membro Diretor, podem:
+  - [x] Criar e atribuir novas metas aos membros do Time.
+  
+---
+
+## 🎨 Layout
+
+O layout da aplicação está disponível no Figma:
+
+<a href="https://www.figma.com/file/1SxgOMojOB2zYT0Mdk28lB/Ecoleta?node-id=136%3A546">
+  <img alt="Made by tgmarinho" src="https://img.shields.io/badge/Acessar%20Layout%20-Figma-%2304D361">
+</a>
+
+### Web
+
+<p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
+  <img alt="NextLevelWeek" title="#NextLevelWeek" src="./assets/web.svg" width="400px">
+
+  <img alt="NextLevelWeek" title="#NextLevelWeek" src="./assets/sucesso-web.svg" width="400px">
+</p>
+
+---
+
+## 🚀 Como executar o projeto
+
+Este projeto é divido em duas partes:
+1. Backend (pasta server) 
+2. Frontend (pasta web)
+
+💡O Frontend precisa que o Backend esteja sendo executado para funcionar.
+
+### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/). 
 Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
-### 🎲 Rodando o Back End (servidor)
+#### 🎲 Rodando o Backend (servidor)
 
-Clone este repositório
 ```bash
-git clone <https://github.com/daniel-bernardino747/folhasquesalvam>
+
+# Clone este repositório
+$ git clone git@github.com:daniel-bernardino747/folhasquesalvam.git
+
+# Acesse a pasta do projeto no terminal/cmd
+$ cd folhasquesalvam
+
+# Vá para a pasta back-end
+$ cd back-end
+
+# Instale as dependências
+$ npm install
+
+# Configure as variáveis de ambiente descritas em `.env.example`, criando um `.env` e copiando as variáveis.
+$ touch .env
+
+# Execute a aplicação em modo de desenvolvimento
+$ npm run start:dev
+
+# O servidor inciará na porta:4000 - acesse http://localhost:4000 
+
 ```
 
-Acesse a pasta do projeto no terminal/cmd
+#### 🧭 Rodando a aplicação web (Frontend)
+
 ```bash
-cd folhasquesalvam/back-end
+
+# Clone este repositório
+$ git clone git@github.com:daniel-bernardino747/folhasquesalvam.git
+
+# Acesse a pasta do projeto no seu terminal/cmd
+$ cd folhasquesalvam
+
+# Vá para a pasta da aplicação Front End
+$ cd front-end
+
+# Instale as dependências
+$ npm install
+
+# Configure as variáveis de ambiente descritas em `.env.example`, criando um `.env` e copiando as variáveis.
+$ touch .env
+
+# Execute a aplicação em modo de desenvolvimento
+$ npm run dev
+
+# A aplicação será aberta na porta:3000 - acesse http://localhost:3000
+
 ```
-
-Instale as dependências
-```bash
-npm install
-```
-_____
-
-### Atenção :heavy_exclamation_mark:
-Antes de iniciar sua aplicação, crie o arquivo `.env`:
-```bash
-touch .env
-```
-
-e configure as variáveis de ambiente descritas em `.env.example`.
-```properties
-DATABASE_URL=
-CLERK_SECRET_KEY=
-CLERK_API_URL=
-CLERK_API_VERSION=
-CLERK_ID=
-CLERK_EMAIL=
-```
-
-Para fazer isso rapidamente, acesse a pasta com seu editor de código.
-```bash
-code .
-```
-### 🎲 Rodando o Front-end (servidor)
-
-Clone este repositório
-```bash
-git clone <https://github.com/daniel-bernardino747/folhasquesalvam>
-```
-Caso já tenha feito, apenas retorne para a pasta raiz do projeto.
-
-Acesse a pasta do projeto no terminal/cmd
-```bash
-cd folhasquesalvam/front-end
-```
-
-Instale as dependências
-```bash
-npm install
-```
-_____
-
-### Atenção :heavy_exclamation_mark:
-Antes de iniciar sua aplicação, crie o arquivo `.env`:
-```bash
-touch .env
-```
-
-e configure as variáveis de ambiente descritas em `.env.example`.
-```properties
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-NEXT_PUBLIC_API_BASE_URL=
-```
-
-_____
-
-Execute a aplicação em modo de desenvolvimento
-```bash
-npm run dev
-```
-
-## Tecnologias
-
-🛠 As seguintes ferramentas foram usadas na construção do projeto:
-
-- [Nest.js](https://nestjs.com/)
-- [Next.js](https://nextjs.org/)
-- [Prisma](https://www.prisma.io/)
-- [Clerk](https://clerk.com/)
-
-Bibliotecas utilizadas para padronização e/ou facilitação:
-
-- [Prettier](https://prettier.io/)
-- [Eslint](https://eslint.org/)
-- [clsx](https://github.com/lukeed/clsx#readme)
-- [Typescript](https://www.typescriptlang.org/)
-- [React Sidebar](https://github.com/azouaoui-med/react-pro-sidebar#readme)
-- [React Hook Form](https://react-hook-form.com/)
-- [Swagger](https://swagger.io/)
-- [Axios](https://axios-http.com/ptbr/)
 
 ---
 
-## Autor
+## 🛠 Tecnologias
+
+As seguintes ferramentas foram usadas na construção do projeto:
+
+#### **Website**  ([NextJS](https://nextjs.org/)  +  [TypeScript](https://www.typescriptlang.org/))
+
+-   **[Clerk API Front-end](https://clerk.com/)**
+-   **[animate.css](https://animate.style/)**
+-   **[clsx](https://github.com/lukeed/clsx)**
+-   **[React Icons](https://react-icons.github.io/react-icons/)**
+-   **[React Datepicker](https://reactdatepicker.com/)**
+-   **[React Hook Form](https://react-hook-form.com/)**
+-   **[React Pro Sidebar](https://github.com/azouaoui-med/react-pro-sidebar/)**
+-   **[React Use](https://github.com/streamich/react-use/)**
+-   **[SweetAlert2](https://sweetalert2.github.io/)**
+
+> Veja o arquivo  [package.json](https://github.com/daniel-bernardino747/folhasquesalvam/blob/main/front-end/package.json)
+
+#### [](https://github.com/daniel-bernardino747/folhasquesalvam#server-nestjs--typescript) **Server**  ([NestJS](https://nestjs.com/)  +  [TypeScript](https://www.typescriptlang.org/))
+
+-   **[Clerk API Back-end](https://clerk.com/)**
+-   **[Axios](https://axios-http.com/ptbr/)**
+-   **[Prisma](https://www.prisma.io/)**
+-   **[Swagger](https://swagger.io/)**
+-   **[dotENV](https://github.com/motdotla/dotenv)**
+-   **[Class Validator](https://github.com/typestack/class-validator)**
+
+> Veja o arquivo  [package.json](https://github.com/daniel-bernardino747/folhasquesalvam/blob/main/back-end/package.json)
+
+#### [](https://github.com/daniel-bernardino747/folhasquesalvam#utilit%C3%A1rios)**Utilitários**
+
+-   Protótipo:  **[Figma](https://www.figma.com/)**  →  **[Protótipo (Ecoleta)](https://www.figma.com/file/1SxgOMojOB2zYT0Mdk28lB/Ecoleta)**
+-   API:  **[IBGE API](https://servicodados.ibge.gov.br/api/docs/localidades?versao=1)**  →  **[API de UFs](https://servicodados.ibge.gov.br/api/docs/localidades?versao=1#api-UFs-estadosGet)**,  **[API de Municípios](https://servicodados.ibge.gov.br/api/docs/localidades?versao=1#api-Municipios-estadosUFMunicipiosGet)**
+-   Maps:  **[Leaflet](https://react-leaflet.js.org/en/)**
+-   Editor:  **[Visual Studio Code](https://code.visualstudio.com/)**  → Extensions:  **[SQLite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite)**
+-   Markdown:  **[StackEdit](https://stackedit.io/)**,  **[Markdown Emoji](https://gist.github.com/rxaviers/7360908)**
+-   Commit Conventional:  **[Commitlint](https://github.com/conventional-changelog/commitlint)**
+-   Teste de API:  **[Insomnia](https://insomnia.rest/)**
+-   Ícones:  **[Feather Icons](https://feathericons.com/)**,  **[Font Awesome](https://fontawesome.com/)**
+-   Fontes:  **[Ubuntu](https://fonts.google.com/specimen/Ubuntu)**,  **[Roboto](https://fonts.google.com/specimen/Roboto)**
+
+
+---
+
+
+## 💪 Como contribuir no projeto
+
+1. Faça um **fork** do projeto.
+2. Crie uma nova branch com as suas alterações: `git checkout -b my-feature`
+3. Salve as alterações e crie uma mensagem de commit contando o que você fez: `git commit -m "feature: My new feature"`
+4. Envie as suas alterações: `git push origin my-feature`
+
+---
+
+## 🦸 Autor
 
 <a href="https://github.com/daniel-bernardino747">
  <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/106272711?v=4" width="100px;" alt=""/>
@@ -149,9 +229,13 @@ Bibliotecas utilizadas para padronização e/ou facilitação:
  <sub><b>Daniel Bernardino</b></sub>
 </a>
 
-
-Feito com ❤️ por Dan 👋🏽 Entre em contato!
-
-[![Instagram Badge](https://img.shields.io/badge/-@daniel_bernardino-c55180?style=flat-square&labelColor=c55180&logo=instagram&logoColor=white&link=https://www.instagram.com/daniel__bernardino/)](https://www.instagram.com/daniel__bernardino/) 
 [![Linkedin Badge](https://img.shields.io/badge/-danielbernardinodesouza-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/danielbernardinodesouza/)](https://www.linkedin.com/in/danielbernardinodesouza/) 
 [![Gmail Badge](https://img.shields.io/badge/-dn.danielbernardino@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:dn.danielbernardino@gmail.com)](mailto:dn.danielbernardino@gmail.com)
+
+---
+
+## 📝 Licença
+
+Este projeto esta sobe a licença [MLP](./LICENSE).
+
+Feito com ❤️ por Daniel Bernardino 👋🏽 [Entre em contato!](https://www.linkedin.com/in/danielbernardinodesouza/)
