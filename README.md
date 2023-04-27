@@ -198,12 +198,12 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 #### [](https://github.com/daniel-bernardino747/folhasquesalvam#utilit%C3%A1rios)**Utilitários**
 
--   Protótipo:  **[Figma](https://www.figma.com/)**  →  **[Protótipo (Ecoleta)](https://www.figma.com/file/1SxgOMojOB2zYT0Mdk28lB/Ecoleta)**
--   Editor:  **[Visual Studio Code](https://code.visualstudio.com/)**  → Extensions:  **[SQLite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite)**
+-   Protótipo:  **[Figma](https://www.figma.com/)**  →  **[Protótipo (Folhas Que Salvam)](https://www.figma.com/file/rhnuureo9Q54bcrdr2tubL/Folhas-Que-Salvam?type=design&node-id=0%3A1&t=oAYvyRAWCxmqLtbm-1)**
+-   Editor:  **[Visual Studio Code](https://code.visualstudio.com/)**  → Extensions:  **[Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)**, **[Prisma Insider](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma-insider)**
 -   Markdown: **[Markdown Emoji](https://gist.github.com/rxaviers/7360908)**
 -   Commit Conventional:  **[Commitlint](https://github.com/conventional-changelog/commitlint)**
 -   Teste de API:  **[Thunder Client](https://www.thunderclient.com/)**
--   Fontes: **[Roboto](https://fonts.google.com/specimen/Roboto)**
+-   Fontes: **[Roboto](https://fonts.google.com/specimen/Roboto)**, **[Fira Code](https://fonts.google.com/specimen/Fira+Code)**
 
 
 ---
